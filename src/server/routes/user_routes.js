@@ -28,8 +28,38 @@ router.get('/:userid/getuser', function(req, res, next) {
   });
 });
 
+//////////////////////// UPDATE SINGLE USER
 
-//////////////////////// // CREATE/POST USERS
+router.put('/:userid/updateuser',function(req,res,next){
+  var updatedUser = {
+    email:req.body.email,
+    password:req.body.password,
+    phone:req.body.phone
+  };
+  User.findByIdAndUpdate(req.params.userid,updatedUser,function(err,data){
+    if(err){
+      res.json({'message':err});
+    }else {
+      res.json(data);
+    }
+  });
+});
+// router.put('/user/:id', function(req, res, next) {
+//   var update = {
+//     username:req.body.username,
+//     password:req.body.password
+//   };
+//   User.findByIdAndUpdate(req.params.id, update, function(err, data){
+//     if(err){
+//       res.json({'message': err});
+//     } else {
+//       res.json(data);
+//     }
+//   });
+// });
+
+
+//////////////////////// // CREATE/POST USER
 router.post('/createuser', function(req, res, next) {
   var newUser = new User({
     email: req.body.email,

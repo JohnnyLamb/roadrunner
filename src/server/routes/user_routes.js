@@ -44,20 +44,6 @@ router.put('/:userid/updateuser',function(req,res,next){
     }
   });
 });
-// router.put('/user/:id', function(req, res, next) {
-//   var update = {
-//     username:req.body.username,
-//     password:req.body.password
-//   };
-//   User.findByIdAndUpdate(req.params.id, update, function(err, data){
-//     if(err){
-//       res.json({'message': err});
-//     } else {
-//       res.json(data);
-//     }
-//   });
-// });
-
 
 //////////////////////// // CREATE/POST USER
 router.post('/createuser', function(req, res, next) {
@@ -66,7 +52,6 @@ router.post('/createuser', function(req, res, next) {
     password: req.body.password,
     phone: req.body.phone
   });
-
   newUser.save(function(err, data) {
     if (err) {
       res.json({
@@ -77,8 +62,6 @@ router.post('/createuser', function(req, res, next) {
     }
   });
 });
-
-
 
 //////////////////////////// DELETE SINGLE USER
 router.delete('/:userid/deleteuser', function(req, res, next) {

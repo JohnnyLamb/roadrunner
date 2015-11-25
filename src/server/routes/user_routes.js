@@ -3,11 +3,25 @@ var router = express.Router();
 var User = require('../models/users.js');
 
 
-//  GET ALL USERS
-router.get('/getusers', function(req, res,next) {
-  User.find(function(err,data){
-    if(err){
-      res.json({'message':err});
+/////////////////////////////  GET ALL USERS
+router.get('/getusers', function(req, res, next) {
+  User.find(function(err, data) {
+    if (err) {
+      res.json({
+        'message': err
+      });
+    } else {
+      res.json(data);
+    }
+  });
+});
+////////////////////////////   GET SINGLE USER
+router.get('/:userid/getuser', function(req, res, next) {
+  User.findById(req.params.userid,function(err, data) {
+    if (err) {
+      res.json({
+        'message': err
+      });
     } else {
       res.json(data);
     }
@@ -15,19 +29,20 @@ router.get('/getusers', function(req, res,next) {
 });
 
 
-// // CREATE/POST USERS
-router.post('/createuser',function(req,res,next){
-  var newUser = new User ({
-    email:req.body.email,
-    password:req.body.password,
-    phone:req.body.phone
-
+//////////////////////// // CREATE/POST USERS
+router.post('/createuser', function(req, res, next) {
+  var newUser = new User({
+    email: req.body.email,
+    password: req.body.password,
+    phone: req.body.phone
   });
-  console.log(newUser, ' THIS IS THE NEW USER DATA');
-  newUser.save(function(err,data){
-    if(err){
-      res.json({'message':err});
-    } else{
+
+  newUser.save(function(err, data) {
+    if (err) {
+      res.json({
+        'message': err
+      });
+    } else {
       res.json(data);
     }
   });
@@ -35,6 +50,18 @@ router.post('/createuser',function(req,res,next){
 
 
 
+//////////////////////////// DELETE SINGLE USER
+router.delete('/:userid/deleteuser', function(req, res, next) {
+  User.findByIdAndRemove(req.params.userid,function(err, data) {
+    if (err) {
+      res.json({
+        'message': err
+      });
+    } else {
+      res.json(data);
+    }
+  });
+});
 
 
 

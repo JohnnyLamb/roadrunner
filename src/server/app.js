@@ -10,6 +10,7 @@ var mongoose = require('mongoose');
 // *** routes *** //
 var routes = require('./routes/index.js');
 var user_routes = require('./routes/user_routes.js');
+var zillow_routes = require('./routes/zillow_routes.js');
 
 
 // *** express instance *** //
@@ -38,6 +39,7 @@ app.use(express.static(path.join(__dirname, '../client')));
 // *** main routes *** //
 app.use('/', routes);
 app.use('/users', user_routes);
+app.use('/zillowapi', zillow_routes);
 
 
 // catch 404 and forward to error handler

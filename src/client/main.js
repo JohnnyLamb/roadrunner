@@ -11,7 +11,10 @@ myApp.config(['$routeProvider', function ($routeProvider) {
     })
     .when('/register', {
       templateUrl: 'partials/register.html',
-
+    })
+    .when('/searchapi', {
+      templateUrl: 'partials/searchapi.html',
+      controller:'zillowCtrl'
     })
     .otherwise({redirectTo: '/'});
 }]);

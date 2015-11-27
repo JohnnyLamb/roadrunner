@@ -5,18 +5,23 @@ var mongoose = require('mongoose-q')(require('mongoose'));
 var User = require('../models/users.js');
 
 
-/////////////////////////////  GET ALL USERS LISTINGS
-router.get('/getusers', function(req, res, next) {
-  User.find(function(err, data) {
-    if (err) {
-      res.json({
-        'message': err
-      });
-    } else {
-      res.json(data);
-    }
-  });
+/////////////////////////////  GET ALL LISTINGS FROM SPECIFIC USER
+router.get('/:userid/showlistings', function(req, res, next) {
+
+    User.findById(req.params.userid)
+    .populate('listings')
+    // .populate('missions')
+    .exec(function(err, user) {
+        if(err) {
+            res.send(err);
+        } else {
+            res.json(user.listings);
+        }
+    });
 });
+
+
+
 ////////////////////////////   GET USERS SINGLE LISTING
 router.get('/:userid/getuser', function(req, res, next) {
   User.findById(req.params.userid,function(err, data) {
@@ -30,7 +35,7 @@ router.get('/:userid/getuser', function(req, res, next) {
   });
 });
 
-//////////////////////// UPDATE USER LISTING
+//////////////////////// UPDATE SPECIFIC USER LISTING
 router.put('/:userid/updateuser',function(req,res,next){
   var updatedUser = {
     email:req.body.email,
@@ -46,7 +51,7 @@ router.put('/:userid/updateuser',function(req,res,next){
   });
 });
 
-//////////////////////// // SAVE LISTING TO USER
+//////////////////////// // SAVE LISTING TO SPECIFIC USER
 router.post('/:userid/createlisting', function(req, res, next) {
   var newListing = new Listing({
     location: req.body.location,
@@ -66,25 +71,8 @@ router.post('/:userid/createlisting', function(req, res, next) {
   });
 });
 
-// router.put('/:id/ships', function(req, res, next) {
-//     var newShip = new Ship(req.body);
-//     newShip.saveQ();
-//     var update = { $push : {ships : newShip}};
-//     var options = {new:true};
-//     var id = req.params.id;
 
-//     User.findByIdAndUpdateQ(id, update, options)
-//     .then(function(result) {
-//         res.json(result);
-//     })
-//     .catch(function(err) {
-//         res.send(err);
-//     });
-// });
-
-
-
-//////////////////////////// DELETE USER LISTING
+//////////////////////////// DELETE USERS SPECIFIC LISTING
 router.delete('/:userid/deleteuser', function(req, res, next) {
   User.findByIdAndRemove(req.params.userid,function(err, data) {
     if (err) {

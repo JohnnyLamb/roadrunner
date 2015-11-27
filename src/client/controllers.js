@@ -6,8 +6,9 @@ myApp.controller('zillowCtrl', ['$scope',
     $scope.events = {};
     $scope.zillowCall = function() {
        // call to zillow
-      $http.get('/zillowapi').then(function(data) {
-        console.log(data,"  THIS IS FRONT END");
+       console.log("  THIS IS before api call");
+      $http.get('/zillowapi/test').then(function(response) {
+        console.log(response,"  THIS IS FRONT END");
 
       });
     };

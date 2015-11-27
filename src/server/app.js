@@ -10,6 +10,7 @@ var mongoose = require('mongoose');
 // *** routes *** //
 var routes = require('./routes/index.js');
 var user_routes = require('./routes/user_routes.js');
+var listing_routes = require('./routes/listings_routes.js');
 var zillow_routes = require('./routes/zillow_routes.js');
 
 
@@ -39,6 +40,7 @@ app.use(express.static(path.join(__dirname, '../client')));
 // *** main routes *** //
 app.use('/', routes);
 app.use('/users', user_routes);
+app.use('/listings', listing_routes);
 app.use('/zillowapi', zillow_routes);
 
 

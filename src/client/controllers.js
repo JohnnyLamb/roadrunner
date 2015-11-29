@@ -6,9 +6,9 @@ myApp.controller('zillowCtrl', ['$scope',
     $scope.events = {};
     $scope.zillowCall = function() {
        // call to zillow
-       console.log("  THIS IS before api call");
-      $http.get('/zillowapi/test').then(function(response) {
-        console.log(response,"  THIS IS FRONT END");
+       console.log("  WATCH THIS STEPHY");
+      $http.get('/craigslist/scrape').then(function(response) {
+        console.log(response,"  Steph claps");
 
       });
     };

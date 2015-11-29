@@ -12,6 +12,7 @@ var routes = require('./routes/index.js');
 var user_routes = require('./routes/user_routes.js');
 var listing_routes = require('./routes/listings_routes.js');
 var zillow_routes = require('./routes/zillow_routes.js');
+var craigslist_routes = require('./routes/craigslist_routes.js');
 
 
 // *** express instance *** //
@@ -42,6 +43,7 @@ app.use('/', routes);
 app.use('/users', user_routes);
 app.use('/listings', listing_routes);
 app.use('/zillowapi', zillow_routes);
+app.use('/craigslist', craigslist_routes);
 
 
 // catch 404 and forward to error handler

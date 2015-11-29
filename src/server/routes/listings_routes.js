@@ -7,7 +7,6 @@ var User = require('../models/users.js');
 
 /////////////////////////////  GET ALL LISTINGS FROM SPECIFIC USER
 router.get('/:userid/showlistings', function(req, res, next) {
-
     User.findById(req.params.userid)
     .populate('listings')
     // .populate('missions')
@@ -20,8 +19,6 @@ router.get('/:userid/showlistings', function(req, res, next) {
     });
 });
 
-
-
 ////////////////////////////   GET USERS SINGLE LISTING
 router.get('/:userid/getuser', function(req, res, next) {
   User.findById(req.params.userid,function(err, data) {
@@ -30,22 +27,6 @@ router.get('/:userid/getuser', function(req, res, next) {
         'message': err
       });
     } else {
-      res.json(data);
-    }
-  });
-});
-
-//////////////////////// UPDATE SPECIFIC USER LISTING
-router.put('/:userid/updateuser',function(req,res,next){
-  var updatedUser = {
-    email:req.body.email,
-    password:req.body.password,
-    phone:req.body.phone
-  };
-  User.findByIdAndUpdate(req.params.userid,updatedUser,function(err,data){
-    if(err){
-      res.json({'message':err});
-    }else {
       res.json(data);
     }
   });
@@ -73,18 +54,36 @@ router.post('/:userid/createlisting', function(req, res, next) {
 
 
 //////////////////////////// DELETE USERS SPECIFIC LISTING
-router.delete('/:userid/deleteuser', function(req, res, next) {
-  User.findByIdAndRemove(req.params.userid,function(err, data) {
-    if (err) {
-      res.json({
-        'message': err
-      });
-    } else {
-      res.json(data);
-    }
-  });
+// does not delete the object id but does delete the rest of the listing
+router.delete('/:listingid/deletelisting', function(req, res, next) {
+    Listing.findByIdAndRemove(req.params.listingid,
+      function(err, data) {
+        if(err) {
+            res.send(err);
+        } else {
+            res.json(data);
+        }
+    });
 });
 
 
 
 module.exports = router;
+
+// Below is some code that may be implemented later but is not currently being used.
+
+//////////////////////// UPDATE SPECIFIC USER LISTING
+// router.put('/:listingid/updatelisting',function(req,res,next){
+//   var updatedListing = {
+//     location:req.body.location,
+//     price:req.body.price
+//   };
+
+//   User.findByIdAndUpdate(req.params.listingid,updatedListing,function(err,data){
+//     if(err){
+//       res.json({'message':err});
+//     }else {
+//       res.json(data);
+//     }
+//   });
+// });

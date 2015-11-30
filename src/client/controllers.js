@@ -9,7 +9,7 @@ myApp.controller('zillowCtrl', ['$scope',
        console.log("  WATCH THIS STEPHY");
       $http.get('/craigslist/scrape').then(function(response) {
         console.log(response,"  Steph claps");
-
+        $scope.listings = response.data;
       });
     };
 

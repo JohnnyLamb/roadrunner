@@ -1,8 +1,8 @@
 // add controllers
 myApp.controller('zillowCtrl', ['$scope',
-  '$http',
+  '$http','saveAreaService',
   // THIS FUNCTION SENDS SEARCH PARAMS TO THE SCRAPING ROUTE.
-  function($scope, $http) {
+  function($scope, $http,saveAreaService) {
     $scope.events = {};
     $scope.zillowCall = function() {
       var payload = {
@@ -14,6 +14,7 @@ myApp.controller('zillowCtrl', ['$scope',
       console.log("  WATCH THIS STEPHY");
       $http.post('/scrapeZillow/scrape/',payload).then(function(response) {
         console.log(response,"  Steph claps");
+        saveAreaService.listings = response.data;
         $scope.listings = response.data;
       });
     };
@@ -34,5 +35,14 @@ myApp.controller('zillowCtrl', ['$scope',
         // $scope.listings = response.data;
       });
     };
+     $scope.notifyAreaChange = function(){
+      console.log(saveAreaService.listings);
+       $http.post('/zillowapi/callApi',payload).then(function(response) {
+        console.log(response,"  Steph claps again");
+        // $scope.listings = response.data;
+      });
+    };
   }
 ]);
+
+

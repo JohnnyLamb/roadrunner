@@ -5,6 +5,28 @@ var mongoose = require('mongoose-q')(require('mongoose'));
 var User = require('../models/users.js');
 
 
+//////////////////////// SAVE SEARCH TEMPLATE FOR AREA
+
+router.post('/createListingTemplate', function(req, res, next) {
+  var newListing = new Listing({
+    email: req.body.email,
+    password: req.body.password,
+    phone: req.body.phone
+  });
+  newListing.save(function(err, data) {
+    if (err) {
+      res.json({
+        'message': err
+      });
+    } else {
+      res.json(data);
+    }
+  });
+});
+
+
+
+
 /////////////////////////////  GET ALL LISTINGS FROM SPECIFIC USER
 router.get('/:userid/showlistings', function(req, res, next) {
     User.findById(req.params.userid)
@@ -19,18 +41,7 @@ router.get('/:userid/showlistings', function(req, res, next) {
     });
 });
 
-////////////////////////////   GET USERS SINGLE LISTING
-router.get('/:userid/getuser', function(req, res, next) {
-  User.findById(req.params.userid,function(err, data) {
-    if (err) {
-      res.json({
-        'message': err
-      });
-    } else {
-      res.json(data);
-    }
-  });
-});
+
 
 //////////////////////// // SAVE LISTING TO SPECIFIC USER
 router.post('/:userid/createlisting', function(req, res, next) {

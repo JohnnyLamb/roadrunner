@@ -6,6 +6,7 @@ myApp.config(['$routeProvider', function ($routeProvider) {
       templateUrl: 'partials/home.html'
     }).when('/login', {
       templateUrl: 'partials/login.html',
+      controller:'AuthCtrl'
     })
     .when('/logout', {
     })

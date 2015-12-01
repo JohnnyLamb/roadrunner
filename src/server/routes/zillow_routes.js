@@ -6,21 +6,20 @@ var Zillow = require('node-zillow');
 
 
 
-router.get('/test', function(req, res, next) {
-var zillow = new Zillow('X1-ZWz1f11zzzxx57_aovt1');
-
- var parameters = {
-    address:1251+'Lipan'+'St',
-    citystatezip:80204
-
+router.post('/callApi/', function(req, res, next) {
+  var zillow = new Zillow('X1-ZWz1f11zzzxx57_aovt1');
+  var parameters = {
+    address: req.body.address,
+    citystatezip: req.body.citystatezip
   };
- zillow.callApi('GetDeepSearchResults',parameters)
+
+  zillow.callApi('GetDeepSearchResults', parameters)
     .then(function(data) {
-        var results = data.response[0].results[0].result[0];
-        console.log(results);
+      var results = data.response[0].results[0].result[0];
+      console.log(results);
       return results;
 
-    }).then(function(data){
+    }).then(function(data) {
       res.json(data);
     });
 

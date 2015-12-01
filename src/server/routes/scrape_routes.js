@@ -6,25 +6,30 @@ var request = require('request');
 var cheerio = require('cheerio');
 var mongoose = require('mongoose-q')(require('mongoose'));
 /////////////////////////////  SCRAPE CRAIGSLIST
-router.get('/scrape', function(req, res) {
+router.post('/scrape/', function(req, res) {
+  // console.log(req.body.location," payload ");
   var titles = [];
   var title;
-  request('http://www.zillow.com/homes/Denver-CO_rb/?fromHomePage=true&shouldFireSellPageImplicitClaimGA=false', function(error, response, html) {
+  var location = req.body.location;
+  var minPrice = req.body.minPrice;
+  var maxPrice = req.body.maxPrice;
+
+
+  request('http://www.zillow.com/homes/for_sale/'+location+'-CO/pmf,pf_pt/house,condo,apartment_duplex,mobile,townhouse_type/11093_rid/'+minPrice+'-'+maxPrice+'_price/556-1112_mp/39.878127,-104.49543,39.649583,-105.216408_rect/10_zm/', function(error, response, html) {
     if (!error) {
-    console.log('getting here');
-
       var $ = cheerio.load(html);
-
       $('.property-address').filter(function() {
-
         var data = $(this);
-        // console.log(data);
         title = data.text();
         titles.push(title);
-
       });
+      // $('.property-address').filter(function() {
+      //   var data = $(this);
+      //   title = data.text();
+      //   titles.push(title);
+      // });
       res.json(titles);
-      console.log(titles);
+
     }
   });
 });

@@ -42,68 +42,38 @@ router.post('/:userid/updateListings', function(req, res, next) {
     } else if (listing[0].listingsArray[0] === fakeArray) {
       console.log('this means there is a match and you should not do anything');
       console.log(listing[0].listingsArray[0]);
-    } else  {
+    } else {
       //     // update logic will eventually go in here! with notification logic
       console.log('johnny i think you are close! you need to update now!');
-      // console.log(listing[0].listingsArray);
-      listingarray = listing[0].listingsArray.push(toCheck);
+
+      // console.log(fakeArray[0]);
+
+      listingarray = listing[0].listingsArray;
+      // console.log(toCheck);
+      listingarray.unshift(fakeArray[0]);
+      // console.log(listingarray);
       var updatedArray = listingarray;
-
-
+      // console.log(updatedArray);
       var updatedListing = {
         "location": req.body.location,
         "minPrice": req.body.minPrice,
         "maxPrice": req.body.maxPrice,
         "listingsArray": updatedArray
       };
-      console.log(updatedListing.listingsArray);
-      Listing.updateQ(updatedListing, function(err, data) {
+
+      console.log(updatedListing.listingsArray, ' this is coming backfrom updatelisting');
+      Listing.update(updatedListing, function(err, data) {
         if (err) {
           res.json({
             'message': err
           });
         } else {
-          console.log(data);
+          console.log(data,' hey this is inside listing update');
           res.json(data);
         }
       });
     }
-});
-
-
-// }, function(err, listing) {
-//   console.log(listing, 'this is to check if you got the listing');
-//   if (listing === null) {
-//     console.log('there is nothing like that yet, mongo will save it to the database');
-//     newListing.saveQ();
-//   } else if (listing.listingsArray[0] === toCheck) {
-//     // IF IT's THE SAME DOO NOTHING!!!!
-//     console.log('this means they are the same and you should not do anything!');
-//     res.json(listing);
-//   } else if (listing.listingsArray[0] !== toCheck) {
-//     // update logic will eventually go in here! with notification logic
-//     console.log('johnny i think you are close! you need to update now!');
-//     var updatedListing = {
-//       "location": "DENVER",
-//       "maxPrice": '300000',
-//       "minPrice": '150000',
-//       "listingsArray":'Keep going! you can get this!'
-//     };
-//     Listing.update(updatedListing, function(err, data) {
-//       if (err) {
-//         res.json({
-//           'message': err
-//         });
-//       } else {
-//         console.log(data);
-//         res.json(data);
-//       }
-//     });
-//   } else {
-//     console.log('nothing happened yo');
-//   }
-// });
-res.send('nothing');
+  });
 });
 
 

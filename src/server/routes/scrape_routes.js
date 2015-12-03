@@ -14,11 +14,12 @@ router.post('/scrape/', function(req, res) {
   var maxPrice = req.body.maxPrice.trim();
 
 
-  request('http://www.zillow.com/homes/for_sale/'+location+'-CO/fsba,fsbo,fore,cmsn_lt/house_type/11093_rid/'+minPrice+'-'+maxPrice+'_price/553-1107_mp/1_days/1_pnd/39.869168,-104.665032,39.567587,-105.098992_rect/10_zm/0_mmm/', function(error, response, html) {
+  request('http://www.zillow.com/homes/for_sale/' + location + '-CO/fsba,fsbo,fore,cmsn_lt/house_type/11093_rid/' + minPrice + '-' + maxPrice + '_price/553-1107_mp/1_days/1_pnd/39.869168,-104.665032,39.567587,-105.098992_rect/10_zm/0_mmm/', function(error, response, html) {
     if (!error) {
       var $ = cheerio.load(html);
       $('.property-address').filter(function() {
         var data = $(this);
+
         title = data.text();
         titles.push(title);
       });

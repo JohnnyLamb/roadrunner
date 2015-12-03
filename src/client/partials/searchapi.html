@@ -1,7 +1,7 @@
 <div class="col-md-4">
   <h1>Search for a house!</h2>
   <div ng-show="error" class="alert alert-danger">{{errorMessage}}</div>
-  <form class="form" ng-submit="zillowCall()">
+  <form class="form" ng-submit="zillowScrape()">
     <div class="form-group">
       <label>Location</label>
       <input type="text" class="form-control" name="location" ng-model='location'>
@@ -37,5 +37,10 @@
 
         </tr>
       </tbody>
-      <button ng-click="notifyAreaChange()" class='btn btn-primary'><span class='glyphicon glyphicon-plus'></span>Keep an eye on this area!</button>
+      <button ng-click="keepAnEyeOnArea()" class='btn btn-primary'><span class='glyphicon glyphicon-plus'></span>Keep an eye on this area!</button>
+
+      </br></br></br>
+       <button ng-click="getListings()" class='btn btn-primary'><span class='glyphicon glyphicon-plus'></span>getlistings</button>
     </table>
+
+    <div>{{moreInfoHouse}}</div>

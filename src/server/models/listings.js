@@ -3,7 +3,9 @@ var Schema = mongoose.Schema;
 
 var Listing = new Schema({
   location:String,
-  price:Number
+  minPrice:String,
+  maxPrice:String,
+  listingsArray:[]
 });
 
 

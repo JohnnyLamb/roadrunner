@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var User = new Schema({
-  email:{type:String,unique:true},
+  email:String,
   password:String,
   phone:Number,
   listings: [{type: Schema.Types.ObjectId, ref : 'listings'}]

@@ -40,20 +40,28 @@ function compareScrapeToDbFunction(location, minPrice, maxPrice, listingsArray, 
       // UPDATE THE DATABASE
       console.log('this is if they are different', scrapeTitles[0] + "   " + toCheckFromDb);
 
-      console.log(scrapeTitles,' this is the array of listings from the scrape')
+      console.log(scrapeTitles, ' this is the array of listings from the scrape')
 
       var updatedListing = {
         "listingsArray": scrapeTitles
       };
 
-      Listing.findByIdAndUpdate(idFromDb,updatedListing, function(error, data) {
+      Listing.findByIdAndUpdate(idFromDb, updatedListing, function(error, data) {
         if (error) {
           res.json({
             'message': error
           });
         } else {
           console.log(data, ' hey this is inside listing update');
-
+          // TWILIO FUNCTION BELOW //
+          client.sms.messages.post({
+            to: '+17192383915',
+            from: '+1 251-304-9672',
+            body: 'There is a new house near '+location+' '+scrapeTitles[0]+' !'
+          }, function(err, text) {
+            console.log('You sent: ' + text.body);
+            console.log('Current status of this text message is: ' + text.status);
+          });
         }
       });
     }
@@ -69,7 +77,7 @@ Listing.find(function(err, data) {
   } else {
     for (var i = 0; i < data.length; i++) {
 
-      compareScrapeToDbFunction(data[i].location, data[i].minPrice, data[i].maxPrice, data[i].listingsArray,data[i]._id);
+      compareScrapeToDbFunction(data[i].location, data[i].minPrice, data[i].maxPrice, data[i].listingsArray, data[i]._id);
     }
 
   }

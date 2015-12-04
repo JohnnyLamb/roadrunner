@@ -14,7 +14,7 @@ var client = require('twilio')('AC85148738df5f0791787140839270cec7', 'a6c87f9a3e
 
 
 
-// new CronJob('* 01 * * * *', function() {
+// new CronJob('*/15 * * * *', function() {
 
 //   console.log('You will see this message when the cron job is done');
 // }, null, true, 'America/Denver');
@@ -31,7 +31,7 @@ var client = require('twilio')('AC85148738df5f0791787140839270cec7', 'a6c87f9a3e
 /////////////////////////////////////////////////////////////////////////////
 
 router.post('/:userid/updateListings', function(req, res, next) {
-  // console.log(req.body, ' this is the body');
+  console.log(req.body, ' this is the body');
 
 // client.sms.messages.post({
 //     to:'+17192383915',
@@ -60,12 +60,12 @@ router.post('/:userid/updateListings', function(req, res, next) {
   where('minPrice').equals(req.body.minPrice).
   where('location').equals(req.body.location).
   exec(function(err, listing) {
-    console.log(listing, ' this is the result of the query');
-    // console.log(listing[0].listingsArray[0],' this is right after the query');
-    if (listing[0] === undefined) {
+    // console.log(listing, ' this is the result of the query');
+
+    if (!listing[0]) {
       // this means it is not in the database yet... save it!
       console.log('youre doing it peter! Its being saved!');
-      newListing.saveQ();
+      newListing.saveQ(); // add error handlers
     } else if (listing[0].listingsArray[0] === toCheck) {
       console.log('this means there is a match and you should not do anything');
       // console.log(listing[0].listingsArray[0]);
@@ -76,22 +76,13 @@ router.post('/:userid/updateListings', function(req, res, next) {
       listingarray = listing[0].listingsArray;
       listingarray.unshift(toCheck);
 
-      console.log(listingarray, ' this is the listingsArray');
+
       var updatedArray = listingarray;
 
       var updatedListing = {
-        // "location": req.body.location,
-        // "minPrice": req.body.minPrice,
-        // "maxPrice": req.body.maxPrice,
         "listingsArray": updatedArray
       };
-      console.log(updatedListing, ' this is the updated listing');
-      var options = {
-        new: true
-      };
-      // console.log(updatedListing.listingsArray, ' this is coming backfrom updatelisting');
 
-      console.log('right before update', listing[0]);
       listing[0].update(updatedListing, function(error, data) {
         if (error) {
           res.json({

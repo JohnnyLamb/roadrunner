@@ -30,7 +30,7 @@
       </tr>
     </thead>
       <tbody>
-       <tr ng-repeat='listing in listings'>
+       <tr ng-repeat='listing in listings track by $index'>
         <td>{{listing}}</td>
         <td><button ng-click="selectListingForZillowCall(listing)" class='btn btn-primary'><span class='glyphicon glyphicon-plus'>Show Info</span></button></td>
 
@@ -40,7 +40,7 @@
       <button ng-click="keepAnEyeOnArea()" class='btn btn-primary'><span class='glyphicon glyphicon-plus'></span>Keep an eye on this area!</button>
 
       </br></br></br>
-       <button ng-click="getListings()" class='btn btn-primary'><span class='glyphicon glyphicon-plus'></span>getlistings</button>
+       <button ng-click="demoListingsFn()" class='btn btn-primary'><span class='glyphicon glyphicon-plus'></span>Demo Notification</button>
     </table>
 
     <div>{{moreInfoHouse}}</div>

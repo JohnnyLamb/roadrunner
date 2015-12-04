@@ -4,71 +4,70 @@ var Listing = require('../models/listings.js');
 var mongoose = require('mongoose-q')(require('mongoose'));
 var User = require('../models/users.js');
 
-var fakeArray = ["1660 Verbena St, Denver, CO80220",
-    "20480 Randolph Pl, Denver, CO80249",
-    "21123 E 45th Ave, Denver, CO80249",
-    "4252 Quivas St, Denver, CO80211",
-    "3145 W 19th Ave, Denver, CO80204",
-    "1350 S Duquesne Cir, Aurora, CO80018",
-    "3861 S Truckee Way, Aurora, CO80013",
-    "6431 Eaton St, Arvada, CO80003",
-    "2849 S Olathe Way, Aurora, CO80013",
-    "2177 S Memphis St, Aurora, CO80013",
-    "761 Leo Ln, Thornton, CO80260",
-    "2923 Monaco Pkwy, Denver, CO80207"];
+
 //////////////////////// SAVE SEARCH TEMPLATE FOR AREA TO A USER
 ///// FIRST, FIND THE USER, THEN CHECK TO SEE IF THE USERS LISTING IS NEW OR OLD, IF IT IS OLD DO NOTHING, IF IT IS NEW UPDATE THE LISTING ARRAY.
 /////////////////////////////////////////////////////////////////////////////
 
 router.post('/:userid/updateListings', function(req, res, next) {
-  // console.log(req.body.listingsArray[0],' this is the body');
-  // console.log(fakeArray[0]);
+  // console.log(req.body, ' this is the body');
+
   var toCheck = req.body.listingsArray[0];
-  // console.log(toCheck);
+  // var demoCheck = req.body.listingsArray[0];
+  console.log(toCheck, ' this is to check');
   var newListing = new Listing(req.body);
 
   // newListing.saveQ();
 
   Listing.find({
-    location: req.body.location
-  }).
-  where('listingsArray').equals(toCheck).
+      location: req.body.location,
+      minPrice: req.body.minPrice,
+      maxPrice: req.body.maxPrice
+    }).
+    // where('listingsArray').equals(toCheck).
+  where('maxPrice').equals(req.body.maxPrice).
   where('minPrice').equals(req.body.minPrice).
-  where('maxPrice').equals(req.body.maxPrice).exec(function(err, listing) {
+  where('location').equals(req.body.location).
+  exec(function(err, listing) {
+    console.log(listing, ' this is the result of the query');
+    // console.log(listing[0].listingsArray[0],' this is right after the query');
     if (listing[0] === undefined) {
       // this means it is not in the database yet... save it!
-      console.log('youre doing it peter!');
+      console.log('youre doing it peter! Its being saved!');
       newListing.saveQ();
-    } else if (listing[0].listingsArray[0] === fakeArray) {
+    } else if (listing[0].listingsArray[0] === toCheck) {
       console.log('this means there is a match and you should not do anything');
-      console.log(listing[0].listingsArray[0]);
+      // console.log(listing[0].listingsArray[0]);
     } else {
       //     // update logic will eventually go in here! with notification logic
-      console.log('johnny i think you are close! you need to update now!');
-
-      // console.log(fakeArray[0]);
+      console.log('johnny i think you are close! update now!');
 
       listingarray = listing[0].listingsArray;
-      // console.log(toCheck);
-      listingarray.unshift(fakeArray[0]);
-      // console.log(listingarray);
+      listingarray.unshift(toCheck);
+
+      console.log(listingarray, ' this is the listingsArray');
       var updatedArray = listingarray;
-      // console.log(updatedArray);
+
       var updatedListing = {
-        "location": req.body.location,
-        "minPrice": req.body.minPrice,
-        "maxPrice": req.body.maxPrice,
+        // "location": req.body.location,
+        // "minPrice": req.body.minPrice,
+        // "maxPrice": req.body.maxPrice,
         "listingsArray": updatedArray
       };
+      console.log(updatedListing, ' this is the updated listing');
+      var options = {
+        new: true
+      };
+      // console.log(updatedListing.listingsArray, ' this is coming backfrom updatelisting');
 
-      console.log(updatedListing.listingsArray, ' this is coming backfrom updatelisting');
-      Listing.update(updatedListing, function(err, data) {
-        if (err) {
+      console.log('right before update', listing[0]);
+      listing[0].update(updatedListing, function(error, data) {
+        if (error) {
           res.json({
-            'message': err
+            'message': error
           });
         } else {
-          console.log(data,' hey this is inside listing update');
+          console.log(data, ' hey this is inside listing update');
           res.json(data);
         }
       });
@@ -136,6 +135,14 @@ router.delete('/:listingid/deletelisting', function(req, res, next) {
     });
 });
 
+// options = {
+//   new: true,
+//   upsert: true
+// }
+
+// findOne({name: 'mike'}, options, function(err, rsults){
+//   console.log(results)
+// })
 
 // router.post('/:userid/updateListings', function(req, res, next) {
 //   // console.log(req.body.listingsArray[0],' this is the body');
@@ -203,3 +210,16 @@ module.exports = router;
 // });
 
 // THIS CODE WAS THE CORRECT QUERY FOR FINDING A SPECIFIC LISTING!
+
+// var fakeArray = ["1660 Verbena St, Denver, CO80220",
+//     "20480 Randolph Pl, Denver, CO80249",
+//     "21123 E 45th Ave, Denver, CO80249",
+//     "4252 Quivas St, Denver, CO80211",
+//     "3145 W 19th Ave, Denver, CO80204",
+//     "1350 S Duquesne Cir, Aurora, CO80018",
+//     "3861 S Truckee Way, Aurora, CO80013",
+//     "6431 Eaton St, Arvada, CO80003",
+//     "2849 S Olathe Way, Aurora, CO80013",
+//     "2177 S Memphis St, Aurora, CO80013",
+//     "761 Leo Ln, Thornton, CO80260",
+//     "2923 Monaco Pkwy, Denver, CO80207"];

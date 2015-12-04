@@ -13,10 +13,7 @@ myApp.controller('zillowCtrl', ['$scope',
         "minPrice": $scope.minPrice,
         "maxPrice": $scope.maxPrice
       };
-
-
       $http.post('/scrapeZillow/scrape/', payload).then(function(response) {
-
         saveAreaService.listings = response.data;
         savedListings = {
           "location": $scope.location.toUpperCase(),
@@ -26,8 +23,8 @@ myApp.controller('zillowCtrl', ['$scope',
         };
         $scope.listings = response.data;
       });
-      // $scope.getListings();
     };
+
     $scope.selectListingForZillowCall = function(listing) {
 
       listing = listing.split(' ');
@@ -46,30 +43,31 @@ myApp.controller('zillowCtrl', ['$scope',
 
 
 
-    $scope.keepAnEyeOnArea = function() {
-      // console.log(savedListings);
+
+
+
+    $scope.demoListingsFn = function() {
+      var arrayToPutInFront= ['1234 yippee kah yay way little doggy'];
+      console.log(saveAreaService.demoListings, ' this is the array before it is changed');
+      console.log(savedListings.listingsArray,' this is the array from the scrape');
+      savedListings.listingsArray.unshift(arrayToPutInFront[0]);
+
+
+    };
+
+       $scope.keepAnEyeOnArea = function() {
+
       var compareWithListing = savedListings;
+      console.log(savedListings.listingsArray);
       // console.log(saveAreaService.compare);
-       var idToCompare = JohnnysId;
-      $http.post('/listings/'+idToCompare+'/updateListings',savedListings).then(function(response) {
-          console.log(response);
+      var idToCompare = JohnnysId;
+      $http.post('/listings/' + idToCompare + '/updateListings', savedListings).then(function(response) {
+        console.log(response);
 
       });
     };
 
 
-
-
-
-
-     $scope.getListings = function() {
-      // console.log(savedListings);
-      // console.log(saveAreaService.userId);
-      $http.get('/listings/getlistings',savedListings).then(function(response) {
-       // console.log(response,"  getting back from listings route");
-      saveAreaService.compare = response;
-      });
-    };
 
   }
 ]);

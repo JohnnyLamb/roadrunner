@@ -6,9 +6,12 @@ var User = require('../models/users.js');
 var CronJob = require('cron').CronJob;
 var request = require('request');
 var cheerio = require('cheerio');
+var config = require('../config');
+
+console.log(config.twilio.twilio1);
 
 
-var client = require('twilio')('AC85148738df5f0791787140839270cec7', 'a6c87f9a3e0edfa9f41d30f3fd0e8b72');
+var client = require('twilio')(config.twilio.twilio1, config.twilio.twilio2);
 
 /// CREATE CRON JOB THAT WILL RUN EVERY TEN MINUTES/////
 /// INSIDE CRON JOB QUERY DATABASE FOR LISTINGS/////////
@@ -55,7 +58,7 @@ function compareScrapeToDbFunction(location, minPrice, maxPrice, listingsArray, 
           console.log(data, ' hey this is inside listing update');
           // TWILIO FUNCTION BELOW //
           client.sms.messages.post({
-            to: '+17192383915',
+            to: '+13035135606',
             from: '+1 251-304-9672',
             body: 'There is a new house near '+location+' '+scrapeTitles[0]+' !'
           }, function(err, text) {

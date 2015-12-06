@@ -11,6 +11,11 @@ var config = require('../config');
 console.log(config.twilio.twilio1);
 
 
+// new CronJob('*/15 * * * *', function() {
+
+//   console.log('You will see this message when the cron job is done');
+// }, null, true, 'America/Denver');
+
 var client = require('twilio')(config.twilio.twilio1, config.twilio.twilio2);
 
 /// CREATE CRON JOB THAT WILL RUN EVERY TEN MINUTES/////

@@ -5,25 +5,11 @@ var mongoose = require('mongoose-q')(require('mongoose'));
 var User = require('../models/users.js');
 var CronJob = require('cron').CronJob;
 var text = require('textbelt');
+var config = require('../config');
 
-var client = require('twilio')('AC85148738df5f0791787140839270cec7', 'a6c87f9a3e0edfa9f41d30f3fd0e8b72');
+var client = require('twilio')(config.twilio.twilio1, config.twilio.twilio2);
 
 //Send an SMS text message
-
-
-
-
-
-// new CronJob('*/15 * * * *', function() {
-
-//   console.log('You will see this message when the cron job is done');
-// }, null, true, 'America/Denver');
-
-
-
-
-
-
 
 
 //////////////////////// SAVE SEARCH TEMPLATE FOR AREA TO A USER

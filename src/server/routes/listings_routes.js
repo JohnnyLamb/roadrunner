@@ -3,6 +3,13 @@ var router = express.Router();
 var Listing = require('../models/listings.js');
 var mongoose = require('mongoose-q')(require('mongoose'));
 var User = require('../models/users.js');
+var CronJob = require('cron').CronJob;
+var text = require('textbelt');
+var config = require('../config');
+
+var client = require('twilio')(config.twilio.twilio1, config.twilio.twilio2);
+
+//Send an SMS text message
 
 
 //////////////////////// SAVE SEARCH TEMPLATE FOR AREA TO A USER
@@ -10,7 +17,17 @@ var User = require('../models/users.js');
 /////////////////////////////////////////////////////////////////////////////
 
 router.post('/:userid/updateListings', function(req, res, next) {
-  // console.log(req.body, ' this is the body');
+  console.log(req.body, ' this is the body');
+
+// client.sms.messages.post({
+//     to:'+17192383915',
+//     from:'+1 251-304-9672',
+//     body:'I love you baby! This is from my app!'
+// }, function(err, text) {
+//     console.log('You sent: '+ text.body);
+//     console.log('Current status of this text message is: '+ text.status);
+// });
+
 
   var toCheck = req.body.listingsArray[0];
   // var demoCheck = req.body.listingsArray[0];
@@ -29,12 +46,12 @@ router.post('/:userid/updateListings', function(req, res, next) {
   where('minPrice').equals(req.body.minPrice).
   where('location').equals(req.body.location).
   exec(function(err, listing) {
-    console.log(listing, ' this is the result of the query');
-    // console.log(listing[0].listingsArray[0],' this is right after the query');
-    if (listing[0] === undefined) {
+    // console.log(listing, ' this is the result of the query');
+
+    if (!listing[0]) {
       // this means it is not in the database yet... save it!
       console.log('youre doing it peter! Its being saved!');
-      newListing.saveQ();
+      newListing.saveQ(); // add error handlers
     } else if (listing[0].listingsArray[0] === toCheck) {
       console.log('this means there is a match and you should not do anything');
       // console.log(listing[0].listingsArray[0]);
@@ -45,22 +62,13 @@ router.post('/:userid/updateListings', function(req, res, next) {
       listingarray = listing[0].listingsArray;
       listingarray.unshift(toCheck);
 
-      console.log(listingarray, ' this is the listingsArray');
+
       var updatedArray = listingarray;
 
       var updatedListing = {
-        // "location": req.body.location,
-        // "minPrice": req.body.minPrice,
-        // "maxPrice": req.body.maxPrice,
         "listingsArray": updatedArray
       };
-      console.log(updatedListing, ' this is the updated listing');
-      var options = {
-        new: true
-      };
-      // console.log(updatedListing.listingsArray, ' this is coming backfrom updatelisting');
 
-      console.log('right before update', listing[0]);
       listing[0].update(updatedListing, function(error, data) {
         if (error) {
           res.json({

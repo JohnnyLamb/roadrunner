@@ -14,6 +14,10 @@ var listing_routes = require('./routes/listings_routes.js');
 var zillow_routes = require('./routes/zillow_routes.js');
 var scrape_routes = require('./routes/scrape_routes.js');
 var cron_routes = require('./routes/cron.js');
+var dotenv = require('dotenv');
+dotenv.load();
+
+
 
 
 // *** express instance *** //

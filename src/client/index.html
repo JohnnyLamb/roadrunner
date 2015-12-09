@@ -1,21 +1,3 @@
-
-
-  <!-- <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/yeti/bootstrap.min.css" rel="stylesheet"> -->
-
-
-
-
-  <!-- scripts -->
-   <!-- <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
-  // <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-  // <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.min.js"></script>
-  // <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular-route.min.js"></script>
-  // <script src="./main.js"></script>
-  // <script src="./services.js"></script>
-  // <script src="./controllers.js"></script>
-  //  <script src="./authController.js"></script> -->
-
-
 <!DOCTYPE html>
 <html ng-app="myApp" lang="en">
 <head>
@@ -33,7 +15,7 @@
   <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
   <!--[endif]-->
 </head>
-  <body>
+  <body ng-controller='zillowCtrl'>
     <!--header starts-->
     <header class="main-header">
       <div class="backbg-color">
@@ -78,21 +60,22 @@
                 <h3>Quick Search For Your New Home.</h3>
               </div>
               <div class="banner-search col-md-offset-2 col-md-8 col-md-offset-2">
-                <div class="col-md-3">
-                  <select class="form-control sellone">
-                      <option>Buy</option>
-                      <option>Sell</option>
-                      <option>Rent</option>
-                  </select>
+                    <div class="col-md-3">
+
+
+                    <input placeholder='Minimum Price' type="text" class="form-control sellone" ng-model='minPrice'>
                 </div>
-                <div class="col-md-6">
+                  <div class="col-md-3">
+                    <input placeholder='Maximum Price' type="text" class="form-control sellone" ng-model='maxPrice'>
+                </div>
+                <div class="col-md-3">
                   <div class="form-group">
-                    <input type="text" class="form-control selltwo" placeholder="Denver, CO">
+                    <input type="text" class="form-control selltwo" ng-model='location' placeholder="Denver, CO">
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="form-btn">
-                    <button type="submit">Search</button>
+                    <button ng-click="zillowScrape()" type="submit">Search</button>
 
 
 
@@ -102,6 +85,29 @@
                   </div>
 
                       <!-- HERE IS WHERE THE SPA STARTS -->
+
+                 <!--  <h1>Search for a house!</h2>
+
+     <form class="form">
+       <div class="form-group">
+         <label>Location</label>
+         <input type="text" class="form-control" name="location" ng-model='location'>
+       </div>
+       <div class="form-group">
+         <label>Min Price</label>
+         <input type="text" class="form-control" name="location" ng-model='minPrice'>
+       </div>
+       <div class="form-group">
+         <label>Max Price</label>
+         <input type="text" class="form-control" name="location" ng-model='maxPrice'>
+       </div>
+         <div>
+          <a href="/#/searchapi"> <button ng-submit="zillowScrape()" type="submit" class="btn btn-default" ng-disabled="disabled">Search!</button></a>
+         </div>
+     </form>
+
+
+ -->
 
                   <div class="col-md-6 form-btn text-center">
                     <div ng-view></div>

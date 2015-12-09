@@ -76,7 +76,7 @@ function compareScrapeToDbFunction(location, minPrice, maxPrice, listingsArray, 
   });
 }
 
-new CronJob('*/15 * * * *', function() {
+// new CronJob('*/15 * * * *', function() {
 Listing.find(function(err, data) {
   if (err) {
     res.json({
@@ -90,8 +90,8 @@ Listing.find(function(err, data) {
 
   }
 });
-  console.log('cron job done');
-}, null, true, 'America/Denver');
+//   console.log('cron job done');
+// }, null, true, 'America/Denver');
 
 
 

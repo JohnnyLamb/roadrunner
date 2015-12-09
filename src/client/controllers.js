@@ -8,6 +8,7 @@ myApp.controller('zillowCtrl', ['$scope',
     var savedListings = {};
     $scope.listings = [];
     $scope.zillowScrape = function() {
+      console.log('hit')
       var payload = {
         "location": $scope.location.toUpperCase(),
         "minPrice": $scope.minPrice,

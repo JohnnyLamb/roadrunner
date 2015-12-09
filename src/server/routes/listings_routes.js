@@ -19,14 +19,14 @@ var client = require('twilio')(config.twilio.twilio1, config.twilio.twilio2);
 router.post('/:userid/updateListings', function(req, res, next) {
   console.log(req.body, ' this is the body');
 
-// client.sms.messages.post({
-//     to:'+17192383915',
-//     from:'+1 251-304-9672',
-//     body:'I love you baby! This is from my app!'
-// }, function(err, text) {
-//     console.log('You sent: '+ text.body);
-//     console.log('Current status of this text message is: '+ text.status);
-// });
+client.sms.messages.post({
+    to:'+13035135606',
+    from:'+1 251-304-9672',
+    body:'I love you baby! This is from my app!'
+}, function(err, text) {
+    console.log('You sent: '+ text.body);
+    console.log('Current status of this text message is: '+ text.status);
+});
 
 
   var toCheck = req.body.listingsArray[0];

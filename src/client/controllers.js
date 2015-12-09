@@ -37,6 +37,7 @@ myApp.controller('zillowCtrl', ['$scope',
           "maxPrice": $scope.maxPrice,
           'listingsArray': saveAreaService.listings
         };
+        console.log(response.data);
         $scope.listings = response.data;
       });
     };

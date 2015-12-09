@@ -62,14 +62,14 @@ function compareScrapeToDbFunction(location, minPrice, maxPrice, listingsArray, 
         } else {
           console.log(data, ' hey this is inside listing update');
           // TWILIO FUNCTION BELOW //
-          client.sms.messages.post({
-            to: '+13035135606',
-            from: '+1 251-304-9672',
-            body: 'There is a new house near '+location+' '+scrapeTitles[0]+' !'
-          }, function(err, text) {
-            console.log('You sent: ' + text.body);
-            console.log('Current status of this text message is: ' + text.status);
-          });
+          // client.sms.messages.post({
+          //   to: '+13035135606',
+          //   from: '+1 251-304-9672',
+          //   body: 'There is a new house near '+location+' '+scrapeTitles[0]+' !'
+          // }, function(err, text) {
+          //   console.log('You sent: ' + text.body);
+          //   console.log('Current status of this text message is: ' + text.status);
+          // });
         }
       });
     }
@@ -77,19 +77,19 @@ function compareScrapeToDbFunction(location, minPrice, maxPrice, listingsArray, 
 }
 
 // new CronJob('*/15 * * * *', function() {
-Listing.find(function(err, data) {
-  if (err) {
-    res.json({
-      'message': err
-    });
-  } else {
-    for (var i = 0; i < data.length; i++) {
+// Listing.find(function(err, data) {
+//   if (err) {
+//     res.json({
+//       'message': err
+//     });
+//   } else {
+//     for (var i = 0; i < data.length; i++) {
 
-      compareScrapeToDbFunction(data[i].location, data[i].minPrice, data[i].maxPrice, data[i].listingsArray, data[i]._id);
-    }
+//       compareScrapeToDbFunction(data[i].location, data[i].minPrice, data[i].maxPrice, data[i].listingsArray, data[i]._id);
+//     }
 
-  }
-});
+//   }
+// });
 //   console.log('cron job done');
 // }, null, true, 'America/Denver');
 

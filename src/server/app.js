@@ -15,7 +15,7 @@ var zillow_routes = require('./routes/zillow_routes.js');
 var scrape_routes = require('./routes/scrape_routes.js');
 var cron_routes = require('./routes/cron.js');
 var dotenv = require('dotenv');
-dotenv.load();
+// dotenv.load();
 
 
 
@@ -26,11 +26,13 @@ var app = express();
 
 var config = require('./config');
 
-mongoose.connect(config.mongoURI[app.settings.env], function(err, res) {
+var mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/roadrunner-development';
+
+mongoose.connect(mongoURI, function(err, res) {
   if(err) {
     console.log('Error connecting to the database. ' + err);
   } else {
-    console.log('Connected to Database: ' + config.mongoURI[app.settings.env]);
+    console.log('Connected to Database: ' + mongoURI);
   }
 });
 

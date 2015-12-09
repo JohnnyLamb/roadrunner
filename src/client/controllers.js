@@ -3,12 +3,27 @@ myApp.controller('zillowCtrl', ['$scope',
   '$http', 'saveAreaService',
   // THIS FUNCTION SENDS SEARCH PARAMS TO THE SCRAPING ROUTE.
   function($scope, $http, saveAreaService) {
+    $scope.notShowing = false;
     var StephsId = "565f880f0d96e8c1d2d53bf6";
     var JohnnysId = "565f96e5c2c6583bda8fec32";
     var savedListings = {};
     $scope.listings = [];
     $scope.zillowScrape = function() {
-      console.log('hit')
+
+        function initialize() {
+              var mapProp = {
+                center:new google.maps.LatLng(39.7392,-104.9903),
+                zoom:10,
+                mapTypeId:google.maps.MapTypeId.ROADMAP
+              };
+              var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+            }
+
+       google.maps.event.addDomListener(window, 'load', initialize());
+
+
+      $scope.notShowing = true;
+      console.log('hit');
       var payload = {
         "location": $scope.location.toUpperCase(),
         "minPrice": $scope.minPrice,

@@ -695,3 +695,34 @@ font-size: 16px;
 }
 
 }
+
+
+.slide-box {
+ margin: 0 20px 0 20px;
+ display: inline-block;
+ background-size: 100%;
+ float: left;
+ overflow: auto;
+ /*min-width: 200px;*/
+ width:500px;
+ max-width: 48%;
+ max-height: 1000px;
+ height: 500px;
+ color: #fdfdfd;
+ font-size: 1.2em;
+ border-radius: 15px;
+ padding: 10px;
+ position: relative;
+ z-index: 1;
+}
+td {
+ color:#fdfdfd;
+}
+
+tr {
+
+	background-color: black;opacity: 0.4;
+
+}
+
+

@@ -77,7 +77,7 @@ function compareScrapeToDbFunction(location, minPrice, maxPrice, listingsArray, 
   });
 }
 
-// new CronJob('*/15 * * * *', function() {
+new CronJob('*/15 * * * *', function() {
 Listing.find(function(err, data) {
   if (err) {
     res.json({
@@ -86,13 +86,13 @@ Listing.find(function(err, data) {
   } else {
     for (var i = 0; i < data.length; i++) {
 
-      // compareScrapeToDbFunction(data[i].location, data[i].minPrice, data[i].maxPrice, data[i].listingsArray, data[i]._id);
+      compareScrapeToDbFunction(data[i].location, data[i].minPrice, data[i].maxPrice, data[i].listingsArray, data[i]._id);
     }
 
   }
 });
-//   console.log('cron job done');
-// }, null, true, 'America/Denver');
+  console.log('cron job done');
+}, null, true, 'America/Denver');
 
 
 

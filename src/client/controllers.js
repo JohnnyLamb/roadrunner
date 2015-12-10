@@ -18,7 +18,7 @@ myApp.controller('zillowCtrl', ['$scope',
           lat: 39.7392,
           lng: -104.9903
         },
-        zoom: 10,
+        zoom: 15,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
       var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);

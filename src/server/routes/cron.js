@@ -86,7 +86,7 @@ Listing.find(function(err, data) {
   } else {
     for (var i = 0; i < data.length; i++) {
 
-      compareScrapeToDbFunction(data[i].location, data[i].minPrice, data[i].maxPrice, data[i].listingsArray, data[i]._id);
+      // compareScrapeToDbFunction(data[i].location, data[i].minPrice, data[i].maxPrice, data[i].listingsArray, data[i]._id);
     }
 
   }

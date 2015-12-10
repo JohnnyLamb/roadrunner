@@ -9,9 +9,11 @@ myApp.controller('zillowCtrl', ['$scope',
     var JohnnysId = "565f96e5c2c6583bda8fec32";
     var savedListings = {};
     $scope.listings = [];
+     var map;
     $scope.zillowScrape = function() {
 
       function initialize() {
+
         var mapProp = {
           center: new google.maps.LatLng(39.7392, -104.9903),
           zoom: 10,
@@ -19,6 +21,16 @@ myApp.controller('zillowCtrl', ['$scope',
         };
         var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
       }
+
+
+      var myLatlng = new google.maps.LatLng(39.7392, -104.9903);
+        var marker = new google.maps.Marker({
+          position: myLatlng,
+          title: "Hello World!"
+        });
+
+        marker.setMap(map);
+
 
       google.maps.event.addDomListener(window, 'load', initialize());
 
@@ -44,6 +56,7 @@ myApp.controller('zillowCtrl', ['$scope',
     };
 
     $scope.selectListingForZillowCall = function(listing) {
+
       $scope.show = true;
       listing = listing.split(' ');
       var zip = listing[listing.length - 1];
@@ -58,16 +71,26 @@ myApp.controller('zillowCtrl', ['$scope',
 
         // console.log(response.data.images[0].image[0].url[0]);
 
-        $scope.houseImages = ['http://theopendoor.lennar.com/wp-content/uploads/2015/07/Lennar-Colorado-Home.jpg','http://www.lennar.com/images/com/images/new-homes/4/17/2326/mhi/Lennar-Colorado-Active-projects-Stapleton_HT-2928-Elev-Shingle_Scheme-01_HR_02.jpg','http://www.lennar.com/images/com/images/new-homes/4/17/2102/mhi/Stonehaven2-ext_1200x650.jpg','http://www.lennar.com/images/com/images/new-homes/4/17/222/mhi/13_Lennar-Colorado-Active-projects-Blackstone-48-ft_HT-3498-Craftsman_Scheme-07_01.jpg','https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRf2Pmnhl4E9XdF2enlfzFw3RqxXGiz8q56cXc3TeuozNMxIFwM','http://theopendoor.lennar.com/wp-content/uploads/2015/04/Stonehaven-1.jpg'];
+        $scope.houseImages = ['http://theopendoor.lennar.com/wp-content/uploads/2015/07/Lennar-Colorado-Home.jpg', 'http://www.lennar.com/images/com/images/new-homes/4/17/2326/mhi/Lennar-Colorado-Active-projects-Stapleton_HT-2928-Elev-Shingle_Scheme-01_HR_02.jpg', 'http://www.lennar.com/images/com/images/new-homes/4/17/2102/mhi/Stonehaven2-ext_1200x650.jpg', 'http://www.lennar.com/images/com/images/new-homes/4/17/222/mhi/13_Lennar-Colorado-Active-projects-Blackstone-48-ft_HT-3498-Craftsman_Scheme-07_01.jpg', 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRf2Pmnhl4E9XdF2enlfzFw3RqxXGiz8q56cXc3TeuozNMxIFwM', 'http://theopendoor.lennar.com/wp-content/uploads/2015/04/Stonehaven-1.jpg'];
 
 
 
-        $scope.moreInfoHouse = {street:response.data.address[0].street[0],city:response.data.address[0].city[0],picture:$scope.houseImages[0]};
+        $scope.moreInfoHouse = {
+          street: response.data.address[0].street[0],
+          city: response.data.address[0].city[0],
+          picture: $scope.houseImages[0]
+        };
 
+        $scope.latitude = response.data.address[0].latitude[0];
+        $scope.longitude = response.data.address[0].longitude[0];
+        // 39.7392, -104.9903
 
+        // To add the marker to the map, call setMap();
       });
-    };
 
+
+
+    };
 
 
     $scope.demoListingsFn = function() {

@@ -6,7 +6,6 @@ var Zillow = require('node-zillow');
 var config = require('../config');
 
 
-
 router.post('/callApi/', function(req, res, next) {
   var zillow = new Zillow(config.zillowApiKey.key);
   var parameters = {
@@ -26,4 +25,30 @@ router.post('/callApi/', function(req, res, next) {
 
 });
 
+
+
 module.exports = router;
+
+
+
+// router.post('/callApi/', function(req, res, next) {
+//   var zillow = new Zillow(config.zillowApiKey.key);
+//   var params = {
+//     address: req.body.address,
+//     citystatezip: req.body.citystatezip
+//   };
+//    zillow.callApi('GetDeepSearchResults',params)
+
+//   .then(function(result) {
+//       var zpid = result.response[0].results[0].result[0].zpid[0];
+//       return zillow.getUpdatedPropertyDetails(zpid);
+//     })
+//     .then(function(result) {
+//       if (result.message[0].code === '502') return {};
+
+//       res.json(result.response[0]);
+//       return result.response[0];
+
+//     });
+
+// });

@@ -9,27 +9,29 @@ myApp.controller('zillowCtrl', ['$scope',
     var JohnnysId = "565f96e5c2c6583bda8fec32";
     var savedListings = {};
     $scope.listings = [];
-     var map;
+    var map;
+
+    function initialize() {
+
+      var mapProp = {
+        center: {
+          lat: 39.7392,
+          lng: -104.9903
+        },
+        zoom: 10,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+      var myLatlng = new google.maps.LatLng(39.7392, -104.9903);
+      var marker = new google.maps.Marker({
+        position: myLatlng,
+        title: "Hello World!"
+      });
+
+      marker.setMap(map);
+    }
     $scope.zillowScrape = function() {
 
-      function initialize() {
-
-        var mapProp = {
-          center: new google.maps.LatLng(39.7392, -104.9903),
-          zoom: 10,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-      }
-
-
-      var myLatlng = new google.maps.LatLng(39.7392, -104.9903);
-        var marker = new google.maps.Marker({
-          position: myLatlng,
-          title: "Hello World!"
-        });
-
-        marker.setMap(map);
 
 
       google.maps.event.addDomListener(window, 'load', initialize());
@@ -83,8 +85,28 @@ myApp.controller('zillowCtrl', ['$scope',
 
         $scope.latitude = response.data.address[0].latitude[0];
         $scope.longitude = response.data.address[0].longitude[0];
-        // 39.7392, -104.9903
 
+        function initializeMarker(lat, long) {
+
+          var mapProp = {
+            center: {
+              lat: 39.7392,
+              lng: -104.9903
+            },
+            zoom: 10,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+          };
+          var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+          var myLatlng = new google.maps.LatLng(lat, long);
+          var marker = new google.maps.Marker({
+            position: myLatlng,
+            title: "Hello World!"
+          });
+
+          marker.setMap(map);
+        }
+
+        initializeMarker($scope.latitude, $scope.longitude);
         // To add the marker to the map, call setMap();
       });
 
